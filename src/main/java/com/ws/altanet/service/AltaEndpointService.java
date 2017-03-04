@@ -48,6 +48,7 @@ import com.ws.altanet.soap.UpdateCommentsResponse;
 import com.ws.altanet.soap.UpdatePostRequest;
 import com.ws.altanet.soap.UpdatePostResponse;
 
+/* Altanet Master */
 /* This is the entry point class of the entire ws */
 
 @WebService /* http://localhost:8080/altanet/service */
