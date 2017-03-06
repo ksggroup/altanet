@@ -62,7 +62,9 @@ public class CommentsDAOImpl implements CommentsDAO {
 	}
 
 	public int addComment(Long post_id, String content, Long user_id) {
-		// TODO Auto-generated method stub
-		return 0;
+		this.jdbcTemplate = new JdbcTemplate(this.dataSource);
+		
+		return jdbcTemplate.update(Constants.COMMENTS_INSERT, new Object[] {content,post_id, user_id});
+		
 	}
 }

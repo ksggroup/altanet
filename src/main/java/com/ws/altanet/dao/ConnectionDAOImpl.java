@@ -46,13 +46,17 @@ public class ConnectionDAOImpl implements ConnectionDAO {
 	}
 
 	public int addConnections(long profile_id, long user_id) {
-		// TODO Auto-generated method stub
-		return 0;
+		this.jdbcTemplate = new JdbcTemplate(this.dataSource);
+		
+		return jdbcTemplate.update(Constants.CONNECTIONS_INSERT, new Object[] {profile_id, user_id});
 	}
 
-	public int removeConnections(long profile_id, long user_id) {
-		// TODO Auto-generated method stub
-		return 0;
+	
+
+	public int removeConnections(long profile_id) {
+		this.jdbcTemplate = new JdbcTemplate(this.dataSource);
+		
+		return jdbcTemplate.update(Constants.CONNECTIONS_DELETE, new Object[] {profile_id});
 	}
 
 }

@@ -33,6 +33,8 @@ import com.ws.altanet.soap.ConnectionsRequest;
 import com.ws.altanet.soap.ConnectionsResponse;
 import com.ws.altanet.soap.DeleteCommentsRequest;
 import com.ws.altanet.soap.DeleteCommentsResponse;
+import com.ws.altanet.soap.DeleteConnectionsRequest;
+import com.ws.altanet.soap.DeleteConnectionsResponse;
 import com.ws.altanet.soap.DeletePostRequest;
 import com.ws.altanet.soap.DeletePostResponse;
 import com.ws.altanet.soap.GetCommentsRequest;
@@ -41,8 +43,11 @@ import com.ws.altanet.soap.GetPostRequest;
 import com.ws.altanet.soap.GetPostResponse;
 import com.ws.altanet.soap.GetReactionRequest;
 import com.ws.altanet.soap.GetReactionResponse;
+import com.ws.altanet.soap.InsertCommentsReq;
+import com.ws.altanet.soap.InsertCommentsRes;
 import com.ws.altanet.soap.InsertPostRequest;
 import com.ws.altanet.soap.InsertPostResponse;
+
 import com.ws.altanet.soap.UpdateCommentsRequest;
 import com.ws.altanet.soap.UpdateCommentsResponse;
 import com.ws.altanet.soap.UpdatePostRequest;
@@ -190,7 +195,7 @@ public class AltaEndpointService {
 	
 	@WebMethod(operationName = "insertPosts")
 	public @WebResult(name = "InsertPostResponse", partName = "InsertPostResponse")InsertPostResponse insertPosts(
-			@WebParam(name = "UpdatePostRequest", partName = "UpdatePostRequest") InsertPostRequest request) {
+			@WebParam(name = "InsertPostRequest", partName = "InsertPostRequest") InsertPostRequest request) {
 		logger.info("Starting service.");
 		InsertPostResponse response = new InsertPostResponse();
 		
@@ -236,14 +241,14 @@ public class AltaEndpointService {
 		logger.info("Returning response.");
 		return response;
 	}
+	//
 	@WebMethod(operationName = "updateComment")
 	public @WebResult(name = "UpdateCommentResponse", partName = "UpdateCommentResponse") UpdateCommentsResponse UpdateComment(
 			@WebParam(name = "UpdateCommentRequest", partName = "UpdateCommentRequest") UpdateCommentsRequest request) {
 		
 		logger.info("Starting service.");
 		UpdateCommentsResponse response = new UpdateCommentsResponse();
-		int updateCount = commentDao.updateComment( request.getContent(), request.getComment_id());
-		
+	int updateCount = commentDao.updateComment( request.getContent(), request.getComment_id());
 		
 		
 		logger.info("Evaluating user object...");
@@ -252,10 +257,24 @@ public class AltaEndpointService {
 		logger.info("Returning response: " + updateCount);
 		return response;
 	}
-
 	
+	@WebMethod(operationName = "insertComments")
+	public @WebResult(name = "InsertCommentsRes", partName = "InsertCommentsRes") InsertCommentsRes insertComments(
+			@WebParam(name = "InsertCommentsReq", partName = "InsertCommentsReq") InsertCommentsReq request) {
+		
+		logger.info("Starting service.");
+		InsertCommentsRes response = new InsertCommentsRes();
+		
+		int insertCount = commentDao.addComment(request.getPost_id(), request.getContent(), request.getUser_id());
+		
+		logger.info("Evaluating user object...");
+		response.setInsertRows(insertCount);
+		
+		logger.info("Returning response: " + insertCount);
+		return response;
 	
-	
+	}
+		
 	@WebMethod(operationName = "getConnections")
 	 public @WebResult(name = "ConnectionsResponse", partName = "ConnectionsResponse") ConnectionsResponse getConnections(
 			@WebParam(name = "ConnectionsRequest", partName = "ConnectionsRequest") ConnectionsRequest request) {
@@ -273,6 +292,25 @@ public class AltaEndpointService {
 		return response;
 		
 	}
+	@WebMethod(operationName = "DeleteConnections")
+	public @WebResult(name = "DeleteConnectionsResponse", partName = "DeleteConnectionsResponse") DeleteConnectionsResponse deleteConnections(
+			@WebParam(name = "DeleteConnectionsRequest", partName = "DeleteConnectionsRequest") DeleteConnectionsRequest request) {
+		
+		logger.info("Starting service.");
+		DeleteConnectionsResponse response = new DeleteConnectionsResponse();
+		int connection = connectionDao.removeConnections(request.getProfile_id());
+		
+		logger.info("Evaluating user object." + connection);
+		
+		if (connection > 0) {
+			response.setDeleteRows(connection);
+		} 
+		logger.info("Returning response.");
+		return response;
+	}
+	
+		
+	
 	
 	@WebMethod(operationName = "getReactions")
 	 public @WebResult(name = "GetReactionResponse", partName = "GetReactionResponse") GetReactionResponse getReaction(
