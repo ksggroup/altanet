@@ -19,7 +19,7 @@ public class AcademicRecordDAOImpl implements AcademicRecordDAO {
 	private static final Logger logger = Logger.getLogger(AcademicRecordDAO.class);
 	@Autowired
 	private DataSource dataSource;
-	private JdbcTemplate jdbcTemplate = new JdbcTemplate();
+	private JdbcTemplate jdbcTemplate;
 	
 	
 	public Academic_record getAcademicRecord(Long user_id) {
