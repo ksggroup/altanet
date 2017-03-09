@@ -6,8 +6,8 @@ import com.ws.altanet.model.Reaction;
 
 public interface ReactionsDAO {
 	public List<Reaction> getReaction(Long post_id);
-	public int deleteReaction(Long post_id);
-	public int updateReaction(Post post);
-	public int addReaction(Long user_id);
+	public int deleteReaction(Long reaction_id);
+	public int updateReaction(Long reaction_id, Long type);
+	public int addReaction(Long post_id, Long user_id, Long type);
 	
 }

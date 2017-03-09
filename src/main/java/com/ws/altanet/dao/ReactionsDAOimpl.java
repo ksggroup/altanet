@@ -54,19 +54,24 @@ public class ReactionsDAOimpl implements ReactionsDAO {
 		
 	
 
-	public int deleteReaction(Long post_id) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteReaction(Long reaction_id) {
+		
+		this.jdbcTemplate = new JdbcTemplate(this.dataSource);
+		
+		return jdbcTemplate.update(Constants.REACTIONS_DELETE, new Object[] {reaction_id});
 	}
 
-	public int updateReaction(Post post) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateReaction( Long type, Long reaction_id) {
+		this.jdbcTemplate = new JdbcTemplate(this.dataSource);
+		
+		return jdbcTemplate.update(Constants.REACTIONS_UPDATE, new Object[] {type, reaction_id });
+		
 	}
 
-	public int addReaction(Long user_id) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int addReaction(Long post_id, Long user_id, Long type) {
+		this.jdbcTemplate = new JdbcTemplate(this.dataSource);
+		
+		return jdbcTemplate.update(Constants.REACTIONS_INSERT, new Object[] { post_id,  user_id, type});
 	}
 
 }

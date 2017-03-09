@@ -2,7 +2,8 @@ package com.ws.altanet.soap;
 
 import java.io.Serializable;
 
-public class DeleteConnectionsResponse implements  Serializable{
+public class DeleteReactionRes  implements Serializable {
+	
 	private int deleteRows;
 
 	public int getDeleteRows() {
@@ -13,4 +14,6 @@ public class DeleteConnectionsResponse implements  Serializable{
 		this.deleteRows = deleteRows;
 	}
 
-}
+
+		
+	}

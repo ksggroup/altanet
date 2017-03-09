@@ -1,6 +1,8 @@
 package com.ws.altanet.service;
 
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.jws.WebMethod;
@@ -12,12 +14,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
 
+import com.sun.xml.ws.security.opt.api.tokens.Timestamp;
 import com.ws.altanet.dao.AcademicRecordDAO;
 import com.ws.altanet.dao.AuthenticationDAO;
 import com.ws.altanet.dao.CommentsDAO;
 import com.ws.altanet.dao.ConnectionDAO;
 import com.ws.altanet.dao.PostDAO;
 import com.ws.altanet.dao.ReactionsDAO;
+import com.ws.altanet.dao.UserMaintenaceDAO;
 import com.ws.altanet.model.Academic_record;
 import com.ws.altanet.model.Comments;
 import com.ws.altanet.model.Connections;
@@ -26,6 +30,8 @@ import com.ws.altanet.model.Reaction;
 import com.ws.altanet.model.User;
 import com.ws.altanet.soap.AcademicRecordRequest;
 import com.ws.altanet.soap.AcademicRecordResponse;
+import com.ws.altanet.soap.AddUserRequest;
+import com.ws.altanet.soap.AddUserResponse;
 import com.ws.altanet.soap.AuthenticateRequest;
 import com.ws.altanet.soap.AuthenticateResponse;
 import com.ws.altanet.soap.CommentResponse;
@@ -33,25 +39,34 @@ import com.ws.altanet.soap.ConnectionsRequest;
 import com.ws.altanet.soap.ConnectionsResponse;
 import com.ws.altanet.soap.DeleteCommentsRequest;
 import com.ws.altanet.soap.DeleteCommentsResponse;
-import com.ws.altanet.soap.DeleteConnectionsRequest;
-import com.ws.altanet.soap.DeleteConnectionsResponse;
+import com.ws.altanet.soap.DeleteConnectionsReq;
+import com.ws.altanet.soap.DeleteConnectionsRes;
 import com.ws.altanet.soap.DeletePostRequest;
 import com.ws.altanet.soap.DeletePostResponse;
+import com.ws.altanet.soap.DeleteReactionReq;
+import com.ws.altanet.soap.DeleteReactionRes;
 import com.ws.altanet.soap.GetCommentsRequest;
 
 import com.ws.altanet.soap.GetPostRequest;
 import com.ws.altanet.soap.GetPostResponse;
 import com.ws.altanet.soap.GetReactionRequest;
 import com.ws.altanet.soap.GetReactionResponse;
+import com.ws.altanet.soap.InsertAcademicReq;
+import com.ws.altanet.soap.InsertAcademicRes;
 import com.ws.altanet.soap.InsertCommentsReq;
 import com.ws.altanet.soap.InsertCommentsRes;
+import com.ws.altanet.soap.InsertConnectionsReq;
+import com.ws.altanet.soap.InsertConnectionsRes;
 import com.ws.altanet.soap.InsertPostRequest;
 import com.ws.altanet.soap.InsertPostResponse;
-
+import com.ws.altanet.soap.InsertReactionReq;
+import com.ws.altanet.soap.InsertReactionRes;
 import com.ws.altanet.soap.UpdateCommentsRequest;
 import com.ws.altanet.soap.UpdateCommentsResponse;
 import com.ws.altanet.soap.UpdatePostRequest;
 import com.ws.altanet.soap.UpdatePostResponse;
+import com.ws.altanet.soap.UpdateReactionReq;
+import com.ws.altanet.soap.UpdateReactionRes;
 
 /* Altanet Master */
 /* This is the entry point class of the entire ws */
@@ -75,6 +90,9 @@ public class AltaEndpointService {
 	
 	@Autowired
 	ReactionsDAO reactionsDAO; 
+	
+	@Autowired
+	UserMaintenaceDAO userDao;
 	
 	private static final Logger logger = Logger.getLogger(AltaEndpointService.class);
 	
@@ -110,6 +128,22 @@ public class AltaEndpointService {
 		return response;
 
 	}
+	//note
+	@WebMethod(operationName = "insertUser")
+	public @WebResult(name = "InsertUserResponse", partName = "InsertUserResponse")AddUserResponse insertUser(
+			@WebParam(name = "InsertUserRequest", partName = "InsertUserRequest") AddUserRequest request) {
+		logger.info("Starting service.");
+		AddUserResponse response = new AddUserResponse();
+		
+		int insertCount = userDao.addUser(request.getFirst_name(), request.getMiddle_name(), request.getLast_name(), request.getDob(), request.getUsername(), request.getPassword());
+		
+		logger.info("Evaluating user object...");
+		response.setInsertRows(insertCount);
+		
+		logger.info("Returning response: " + insertCount);
+		
+		return response;
+	}
 
 	/* http://localhost:8080/altanet/service?method=getAcademicRecord */
 	@WebMethod(operationName = "getAcademicRecord")
@@ -140,6 +174,21 @@ public class AltaEndpointService {
 			response.setAcademicRecord(new Academic_record());
 		}
 
+		return response;
+	}
+	@WebMethod(operationName = "insertAcademicRecord")
+	public @WebResult(name = "InsertAcademicRes", partName = "InsertAcademicRes")InsertAcademicRes insertAcads(
+			@WebParam(name = "InsertAcademicReq", partName = "InsertAcademicReq") InsertAcademicReq request) {
+		logger.info("Starting service.");
+		InsertAcademicRes response = new InsertAcademicRes();
+		
+		int insertCount = academicRecordDao.InsertAcademicRecord(request.getCourse(), request.getCourse(), request.getUser_id());
+		
+		logger.info("Evaluating user object...");
+		response.setInsertRows(insertCount);
+		
+		logger.info("Returning response: " + insertCount);
+		
 		return response;
 	}
 	
@@ -292,12 +341,12 @@ public class AltaEndpointService {
 		return response;
 		
 	}
-	@WebMethod(operationName = "DeleteConnections")
-	public @WebResult(name = "DeleteConnectionsResponse", partName = "DeleteConnectionsResponse") DeleteConnectionsResponse deleteConnections(
-			@WebParam(name = "DeleteConnectionsRequest", partName = "DeleteConnectionsRequest") DeleteConnectionsRequest request) {
+	@WebMethod(operationName = "deleteConnections")
+	public @WebResult(name = "DeleteConnectionsResponse", partName = "DeleteConnectionsResponse") DeleteConnectionsRes deleteConnections(
+			@WebParam(name = "DeleteConnectionsRequest", partName = "DeleteConnectionsRequest") DeleteConnectionsReq request) {
 		
 		logger.info("Starting service.");
-		DeleteConnectionsResponse response = new DeleteConnectionsResponse();
+		DeleteConnectionsRes response = new DeleteConnectionsRes();
 		int connection = connectionDao.removeConnections(request.getProfile_id());
 		
 		logger.info("Evaluating user object." + connection);
@@ -307,6 +356,23 @@ public class AltaEndpointService {
 		} 
 		logger.info("Returning response.");
 		return response;
+	}
+	
+		@WebMethod(operationName = "insertConnections")
+	public @WebResult(name = "InsertConnectionsResponse", partName = "InsertConnectionsResponse") InsertConnectionsRes insertConnections(
+			@WebParam(name = "InsertConnectionsRequest", partName = "InsertConnectionsRequest") InsertConnectionsReq request) {
+		
+		logger.info("Starting service.");
+		InsertConnectionsRes response = new InsertConnectionsRes();
+		
+		int insertCount = connectionDao.addConnections(request.getProfile_id(), request.getUser_id());
+		
+		logger.info("Evaluating user object...");
+		response.setInsertRows(insertCount);
+		
+		logger.info("Returning response: " + insertCount);
+		return response;
+	
 	}
 	
 		
@@ -330,8 +396,57 @@ public class AltaEndpointService {
 		
 		return response;
 	}
+	@WebMethod(operationName = "deleteReaction")
+	public @WebResult(name = "DeleteReactionResponse", partName = "DeleteReactionResponse") DeleteReactionRes deleteReaction(
+			@WebParam(name = "DeleteReactionRequest", partName = "DeleteReactionRequest") DeleteReactionReq request) {
+		
+		logger.info("Starting service.");
+		DeleteReactionRes response = new DeleteReactionRes();
+		int reaction = reactionsDAO.deleteReaction(request.getReaction_id());
+		
+		logger.info("Evaluating user object." + reaction);
+		
+		if (reaction > 0) {
+			response.setDeleteRows(reaction);
+		} 
+		logger.info("Returning response.");
+		return response;
+	}
 	
+	@WebMethod(operationName = "insertReaction")
+	public @WebResult(name = "InsertReactionResponse", partName = "InsertReactionResponse")InsertReactionRes insertReaction(
+			@WebParam(name = "InsertReactionRequest", partName = "InsertReactionRequest") InsertReactionReq request) {
+		logger.info("Starting service.");
+		InsertReactionRes response = new InsertReactionRes();
+		
+		int insertCount = reactionsDAO.addReaction(request.getPost_id(), request.getUser_id(), request.getType());
+		
+		logger.info("Evaluating user object...");
+		response.setInsertRows(insertCount);
+		
+		logger.info("Returning response: " + insertCount);
+		return response;
+	
+	}
+	@WebMethod(operationName = "updateReaction")
+	public @WebResult(name = "UpdateReactionRes", partName = "UpdateReactionRes") UpdateReactionRes updateReaction(
+			@WebParam(name = "UpdateReactionReq", partName = "UpdateReactionReq") UpdateReactionReq request) {
+		
+		logger.info("Starting service.");
+		UpdateReactionRes response = new UpdateReactionRes();
+		int updateCount = reactionsDAO.updateReaction( request.getType(), request.getReaction_id());
+		
+		
+		logger.info("Evaluating user object...");
+		response.setUpdateRows(updateCount);
+
+		logger.info("Returning response: " + updateCount);
+		return response;
+	}
+
+
 	
 	
 	
 }
+

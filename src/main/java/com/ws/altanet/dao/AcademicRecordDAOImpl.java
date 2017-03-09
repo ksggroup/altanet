@@ -21,6 +21,7 @@ public class AcademicRecordDAOImpl implements AcademicRecordDAO {
 	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplate = new JdbcTemplate();
 	
+	
 	public Academic_record getAcademicRecord(Long user_id) {
 		logger.info("Setting jdbctemplate.");
 		this.jdbcTemplate = new JdbcTemplate(this.dataSource);
@@ -36,4 +37,13 @@ public class AcademicRecordDAOImpl implements AcademicRecordDAO {
 		
 	}
 
+
+	public int InsertAcademicRecord( String course, String year_level, Long user_id) {
+		this.jdbcTemplate = new JdbcTemplate(this.dataSource);
+		
+		return jdbcTemplate.update(Constants.ACADEMIC_INSERT, new Object[] { course,year_level,user_id });
+	}
+
+
+	
 }
