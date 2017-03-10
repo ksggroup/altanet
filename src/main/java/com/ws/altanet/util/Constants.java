@@ -28,7 +28,7 @@ public class Constants {
 	public static final String REACTIONS_INSERT = "INSERT into reaction(datetime,post_id, user_id, type) values ( NOW() , ?, ?, ?)";
 	
 	
-	public static final String FEEDS_JOIN = "SELECT a.user_Id, a.middle_name, a.last_name, b.post_id, b.content, b.datetime from users a INNER JOIN post b ON a.user_id = b.user_id where a.user_id IN(SELECT profile_id from connections where user_id = ?)";
+	public static final String FEEDS_JOIN = "SELECT a.user_Id, a.first_name, a.middle_name, a.last_name, b.post_id, b.content, b.datetime from users a INNER JOIN post b ON a.user_id = b.user_id where a.user_id IN(SELECT profile_id from connections where user_id = ?)";
 	
 	
 }
