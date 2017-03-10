@@ -46,8 +46,8 @@ import com.ws.altanet.soap.DeletePostResponse;
 import com.ws.altanet.soap.DeleteReactionReq;
 import com.ws.altanet.soap.DeleteReactionRes;
 import com.ws.altanet.soap.GetCommentsRequest;
-import com.ws.altanet.soap.GetFeedsRequest;
-import com.ws.altanet.soap.GetFeedsResponse;
+import com.ws.altanet.soap.GetFeedsReq;
+import com.ws.altanet.soap.GetFeedsRes;
 import com.ws.altanet.soap.GetPostRequest;
 import com.ws.altanet.soap.GetPostResponse;
 import com.ws.altanet.soap.GetReactionRequest;
@@ -214,11 +214,11 @@ public class AltaEndpointService {
 	
 	
 	@WebMethod(operationName = "getFeeds")
-	public @WebResult(name = "GetFeedsResponse", partName = "GetFeedsResponse") GetFeedsResponse getFeeds(
-			@WebParam(name = "GetFeedsRequest", partName = "GetFeedsRequest") GetFeedsRequest request) {
+	public @WebResult(name = "GetFeedsResponse", partName = "GetFeedsResponse") GetFeedsRes getFeeds(
+			@WebParam(name = "GetFeedsRequest", partName = "GetFeedsRequest") GetFeedsReq request) {
 
 		logger.info("Starting service.");
-		GetFeedsResponse response = new GetFeedsResponse();
+		GetFeedsRes response = new GetFeedsRes();
 
 		logger.info("Calling postDao");
 		List<Post> post = postDao.getFeeds(request.getUser_id());

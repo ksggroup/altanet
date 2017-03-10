@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "GetFeedsRequest")
-public class GetFeedsRequest implements Serializable{
+public class GetFeedsReq implements Serializable{
 private static final long serialVersionUID = 1L;
 	
 	@XmlElement(name = "user_id", required = true)
