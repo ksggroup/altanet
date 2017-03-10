@@ -46,7 +46,8 @@ import com.ws.altanet.soap.DeletePostResponse;
 import com.ws.altanet.soap.DeleteReactionReq;
 import com.ws.altanet.soap.DeleteReactionRes;
 import com.ws.altanet.soap.GetCommentsRequest;
-
+import com.ws.altanet.soap.GetFeedsRequest;
+import com.ws.altanet.soap.GetFeedsResponse;
 import com.ws.altanet.soap.GetPostRequest;
 import com.ws.altanet.soap.GetPostResponse;
 import com.ws.altanet.soap.GetReactionRequest;
@@ -211,6 +212,24 @@ public class AltaEndpointService {
 		return response;
 	}
 	
+	
+	@WebMethod(operationName = "getFeeds")
+	public @WebResult(name = "GetFeedsResponse", partName = "GetFeedsResponse") GetFeedsResponse getFeeds(
+			@WebParam(name = "GetFeedsRequest", partName = "GetFeedsRequest") GetFeedsRequest request) {
+
+		logger.info("Starting service.");
+		GetFeedsResponse response = new GetFeedsResponse();
+
+		logger.info("Calling postDao");
+		List<Post> post = postDao.getFeeds(request.getUser_id());
+
+		logger.info("Evaluating user object." + post.size());
+		if (post.size() > 0) {
+			response.setPost(post);
+		} 
+		logger.info("Returning response.");
+		return response;
+	}
 	@WebMethod(operationName = "deletePosts")
 	public @WebResult(name = "DeletePostResponse", partName = "DeletePostResponse") DeletePostResponse deletePosts(
 			@WebParam(name = "DeletePostRequest", partName = "DeletePostRequest") DeletePostRequest request) {
@@ -227,6 +246,7 @@ public class AltaEndpointService {
 		logger.info("Returning response.");
 		return response;
 	}
+	
 	@WebMethod(operationName = "updatePosts")
 	public @WebResult(name = "UpdatePostResponse", partName = "UpdatePostResponse") UpdatePostResponse updatePosts(
 			@WebParam(name = "UpdatePostRequest", partName = "UpdatePostRequest") UpdatePostRequest request) {

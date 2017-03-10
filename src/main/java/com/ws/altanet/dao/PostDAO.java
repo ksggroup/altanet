@@ -9,4 +9,6 @@ public interface PostDAO {
 	public int deletePost(Long post_id);
 	public int updatePost(Long postId, String content);
 	public int addPost(Long user_id, String content);
+	public List <Post> getFeeds(Long user_id);
+	
 }

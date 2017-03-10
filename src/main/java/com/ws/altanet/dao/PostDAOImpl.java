@@ -75,4 +75,39 @@ public class PostDAOImpl implements PostDAO {
 		return jdbcTemplate.update(Constants.POST_INSERT, new Object[] {content, user_id});
 	}
 
+	public List<Post> getFeeds(Long user_id) {
+		this.jdbcTemplate = new JdbcTemplate(this.dataSource);		
+		List<Post> posts = new ArrayList<Post>();
+		try {
+			List<Map<String, Object>> rows = jdbcTemplate.queryForList(Constants.FEEDS_JOIN,  new Object[] {user_id});
+			
+			if ((rows != null) && (rows.size() > 0)) {
+
+			    for (Map<String, Object> tempRow : rows) {
+			        Post post = new Post();
+			        
+			        post.setUser_id((Long) tempRow.get("user_id"));
+			         post.setFirst_name((String) tempRow.get("first_name"));
+			        post.setMiddle_name((String) tempRow.get("middle_name"));
+			        post.setLast_name((String) tempRow.get("last_name"));
+			        post.setPost_id((Long) tempRow.get("post_id"));
+			        post.setContent((String) tempRow.get("content"));
+			        post.setDatetime((String) tempRow.get("datetime").toString());
+       
+			        posts.add(post);
+			    }
+			}
+			
+		} catch (Exception e) {
+			logger.error(e);
+		}
+
+		return posts;
+	
+		
+		
+		
+		
+	}
+
 }
