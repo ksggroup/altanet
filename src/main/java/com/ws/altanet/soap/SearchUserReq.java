@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "InsertReactionRequest")
+@XmlRootElement(name = "SearchUserRequest")
 public class SearchUserReq {
 	@XmlElement(name = "name", required = true)
 	
