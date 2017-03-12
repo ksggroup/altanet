@@ -62,6 +62,8 @@ import com.ws.altanet.soap.InsertPostRequest;
 import com.ws.altanet.soap.InsertPostResponse;
 import com.ws.altanet.soap.InsertReactionReq;
 import com.ws.altanet.soap.InsertReactionRes;
+import com.ws.altanet.soap.SearchUserReq;
+import com.ws.altanet.soap.SearchUserRes;
 import com.ws.altanet.soap.UpdateCommentsRequest;
 import com.ws.altanet.soap.UpdateCommentsResponse;
 import com.ws.altanet.soap.UpdatePostRequest;
@@ -143,6 +145,23 @@ public class AltaEndpointService {
 		
 		logger.info("Returning response: " + insertCount);
 		
+		return response;
+	}
+	@WebMethod(operationName = "searchUser")
+	public @WebResult(name = "SearchUserResponse", partName = "SearchUserResponse") SearchUserRes getPosts(
+			@WebParam(name = "SearchUserRequest", partName = "SearchUserRequest") SearchUserReq request) {
+
+		logger.info("Starting service.");
+		SearchUserRes response = new SearchUserRes();
+
+		logger.info("Calling postDao");
+		List<User> user = userDao.searchUser(request.getName());
+
+		logger.info("Evaluating user object." + user.size());
+		if (user.size() > 0) {
+			response.setUser(user);
+		} 
+		logger.info("Returning response.");
 		return response;
 	}
 

@@ -4,6 +4,9 @@ public class Constants {
 	public static final String USERS_SELECT = "SELECT * FROM users WHERE username = ? AND password = ? LIMIT 1;";
 	public static final String USER_INSERT = "INSERT into users(first_name, middle_name, last_name, dob, username, password) values (?,?,?,to_date(?, 'yyyy-mm-dd'),?,?)";
 	
+	public static final String 	USER_SEARCH = "select * from users where lower(concat_ws(' ', first_name,  middle_name, last_name)) like lower('%?%')";
+
+	
 	public static final String ACADEMIC_SELECT = "SELECT * FROM academic_record where user_id = ? LIMIT 1;";
 	public static final String ACADEMIC_INSERT = "INSERT into academic_record(course, year_level, user_id) values (?,?,?)";
 	 

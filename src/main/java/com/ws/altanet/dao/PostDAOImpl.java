@@ -87,7 +87,7 @@ public class PostDAOImpl implements PostDAO {
 			        Post post = new Post();
 			        
 			        post.setUser_id((Long) tempRow.get("user_id"));
-			         post.setFirst_name((String) tempRow.get("first_name"));
+			        post.setFirst_name((String) tempRow.get("first_name"));
 			        post.setMiddle_name((String) tempRow.get("middle_name"));
 			        post.setLast_name((String) tempRow.get("last_name"));
 			        post.setPost_id((Long) tempRow.get("post_id"));
