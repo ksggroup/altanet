@@ -148,7 +148,7 @@ public class AltaEndpointService {
 		return response;
 	}
 	@WebMethod(operationName = "searchUser")
-	public @WebResult(name = "SearchUserResponse", partName = "SearchUserResponse") SearchUserRes getPosts(
+	public @WebResult(name = "SearchUserResponse", partName = "SearchUserResponse") SearchUserRes search(
 			@WebParam(name = "SearchUserRequest", partName = "SearchUserRequest") SearchUserReq request) {
 
 		logger.info("Starting service.");
