@@ -16,7 +16,7 @@ public class Constants {
 	public static final String COMMENTS_SELECT = "SELECT * FROM comments WHERE post_id = ?";
 	public static final String COMMENTS_DELETE = "DELETE  FROM comments WHERE comment_id = ?";
 	public static final String COMMENTS_UPDATE = "UPDATE comments SET content = ?, date_time = NOW()  where comment_id= ?";
-	public static final String COMMENTS_INSERT = "INSERT INTO comments (content, date_time, post_id, user_id) values (?, NOW(), ?, ?)";
+	public static final String COMMENTS_INSERT = "INSERT INTO comments (content, date_time, post_id, user_id, first_name, middle_name, last_name) values (?, NOW(), ?, ?,?,?,?)";
 	
 	public static final String CONNECTIONS_SELECT = "SELECT * FROM connections WHERE user_id = ?";
 	public static final String CONNECTIONS_DELETE = "DELETE  FROM connections WHERE profile_id = ?";

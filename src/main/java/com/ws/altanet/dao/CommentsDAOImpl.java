@@ -34,7 +34,9 @@ public class CommentsDAOImpl implements CommentsDAO {
 			        comment.setPost_id((Long) tempRow.get("post_id"));
 			        comment.setUser_id((Long) tempRow.get("user_id"));
 			        comment.setUser_id((Long) tempRow.get("comment_id"));
-			        
+			        comment.setFirst_name((String) tempRow.get("first_name"));
+			        comment.setMiddle_name((String) tempRow.get("middle_name"));
+			        comment.setLast_name((String) tempRow.get("last_name"));
 			        comments.add(comment);
 			    }
 			}
@@ -61,10 +63,10 @@ public class CommentsDAOImpl implements CommentsDAO {
 		
 	}
 
-	public int addComment(Long post_id, String content, Long user_id) {
+	public int addComment(Long post_id, String content, Long user_id, String first_name, String middle_name, String last_name) {
 		this.jdbcTemplate = new JdbcTemplate(this.dataSource);
 		
-		return jdbcTemplate.update(Constants.COMMENTS_INSERT, new Object[] {content,post_id, user_id});
+		return jdbcTemplate.update(Constants.COMMENTS_INSERT, new Object[] {content,post_id, user_id,first_name,middle_name,last_name});
 		
 	}
 }

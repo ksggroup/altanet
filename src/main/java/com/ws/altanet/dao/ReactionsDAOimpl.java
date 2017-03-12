@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.ws.altanet.model.Comments;
-import com.ws.altanet.model.Post;
 import com.ws.altanet.model.Reaction;
 import com.ws.altanet.util.Constants;
 

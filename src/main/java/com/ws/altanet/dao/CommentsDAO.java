@@ -7,6 +7,6 @@ public interface CommentsDAO {
 	public List<Comments> getComments(Long post_id);
 	public int deleteComment(Long comment_id);
 	public int updateComment( String content, Long comment_id );
-	public int addComment(Long post_id, String content, Long user_id);
+	public int addComment(Long post_id, String content, Long user_id, String first_name, String middle_name, String last_name);
 
 }

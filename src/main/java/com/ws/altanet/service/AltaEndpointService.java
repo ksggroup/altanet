@@ -334,7 +334,7 @@ public class AltaEndpointService {
 		logger.info("Starting service.");
 		InsertCommentsRes response = new InsertCommentsRes();
 		
-		int insertCount = commentDao.addComment(request.getPost_id(), request.getContent(), request.getUser_id());
+		int insertCount = commentDao.addComment(request.getPost_id(), request.getContent(), request.getUser_id(), request.getFirst_name(), request.getMiddle_name(), request.getLast_name());
 		
 		logger.info("Evaluating user object...");
 		response.setInsertRows(insertCount);
@@ -411,8 +411,8 @@ public class AltaEndpointService {
 		if (reactions.size() > 0) {
 			logger.info("Setting reaction...");
 			response.setReaction(reactions);
-		} 
-		logger.info("Returning response: " + response.getReaction().toString());
+		}
+		
 		
 		return response;
 	}
