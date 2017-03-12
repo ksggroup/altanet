@@ -79,7 +79,7 @@ public class PostDAOImpl implements PostDAO {
 		this.jdbcTemplate = new JdbcTemplate(this.dataSource);		
 		List<Post> posts = new ArrayList<Post>();
 		try {
-			List<Map<String, Object>> rows = jdbcTemplate.queryForList(Constants.FEEDS_JOIN,  new Object[] {user_id});
+			List<Map<String, Object>> rows = jdbcTemplate.queryForList(Constants.FEEDS_JOIN,  new Object[] {user_id, user_id});
 			
 			if ((rows != null) && (rows.size() > 0)) {
 
