@@ -47,7 +47,8 @@ public class UserMaintenaceDAOImpl implements UserMaintenaceDAO {
 			        users.setUser_id((Long) tempRow.get("user_id"));
 			        users.setFirst_name((String) tempRow.get("first_name"));
 			        users.setMiddle_name((String) tempRow.get("middle_name"));
-			        users.setLast_name((String) tempRow.get("last_name"));        
+			        users.setLast_name((String) tempRow.get("last_name"));   
+			        users.setProfile_pic((String) tempRow.get("profile_pic"));
 			        user.add(users);
 			    }
 			}
