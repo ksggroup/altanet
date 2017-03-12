@@ -154,7 +154,7 @@ public class AltaEndpointService {
 		logger.info("Starting service.");
 		SearchUserRes response = new SearchUserRes();
 
-		logger.info("Calling postDao");
+		logger.info("Calling userDao");
 		List<User> user = userDao.searchUser(request.getName());
 
 		logger.info("Evaluating user object." + user.size());
