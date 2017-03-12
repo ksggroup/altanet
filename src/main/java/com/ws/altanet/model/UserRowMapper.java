@@ -17,6 +17,7 @@ public class UserRowMapper implements RowMapper<User> {
 		user.setDob(rs.getDate(5));
 		user.setUsername(rs.getString(6));
 		user.setPassword(rs.getString(7));
+		user.setProfile_pic(rs.getString(8));
 
 		return user;
 	}
